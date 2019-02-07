@@ -1,0 +1,64 @@
+﻿@using Microsoft.AspNet.Identity
+@using sklep.Models
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm"}))
+    {
+    @Html.AntiForgeryToken()
+
+        <ul class="navbar-nav">
+                <li class="nav-item active">
+                        @Html.ActionLink("Witaj " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })
+                    
+                </li>
+                <li class="nav-item" ><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Wyloguj</a></li>
+
+                <li class="nav-item">
+                    @if (Session["cart"] == null)
+                    {
+                        
+                            @Html.ActionLink("Koszyk (0)", "Cart", "ProductModels", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })
+                        
+                    }
+                    else
+                    {
+                        var cart = Session["cart"] as CartModel;
+                            @Html.ActionLink("Koszyk ("+cart.getQuantity()+")", "Cart", "ProductModels", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link btn btn-danger", type = "button" })
+                        
+                     }
+                 </li>
+
+            </ul>
+            }
+            }
+            else
+            {
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                        @Html.ActionLink("Zarejestruj", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })
+                    
+                </li>
+                <li class="nav-item">
+                        @Html.ActionLink("Zaloguj się", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })
+                   
+                </li>
+
+                <li class="nav-item">
+                    @if (Session["cart"] == null)
+                    {
+
+                        @Html.ActionLink("Koszyk (0)", "Cart", "ProductModels", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })
+
+                    }
+                    else
+                    {
+                        var cart = Session["cart"] as CartModel;
+                        @Html.ActionLink("Koszyk (" + cart.getQuantity() + ")", "Cart", "ProductModels", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link btn btn-danger", type = "button" })
+
+                    }
+                </li>
+
+
+
+            </ul>
+            }

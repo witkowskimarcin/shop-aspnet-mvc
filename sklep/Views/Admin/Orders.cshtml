@@ -1,0 +1,60 @@
+﻿@using sklep.Models
+@{
+    ViewBag.Title = "Orders";
+}
+
+<h2>Orders</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>Date</th>
+
+        <th>
+            UserID
+        </th>
+        <th>
+            Firstname
+        </th>
+        <th>
+            Lastname
+        </th>
+        <th>Locality</th>
+        <th>Street</th>
+        <th>Zipcode</th>
+        <th>Phone</th>
+        <th>Shipment</th>
+        <th>Description</th>
+        <th></th>
+    </tr>
+@foreach (OrderModel item in ViewBag.orders)
+{
+    <tr>
+        <td>
+          @item.ID  
+        </td>
+        <td>@item.Date</td>
+
+        <td>
+            @item.UserID
+        </td>
+        <td>
+            @item.Firstname
+        </td>
+        <td>
+            @item.Lastname
+        </td>
+        <td>@item.Locality</td>
+        <td>@item.Street</td>
+        <td>@item.Zipcode</td>
+        <td>@item.Phone</td>
+        <td>@item.Shipment</td>
+        <td>@item.Description</td>
+        <td><a href="/Admin/OrderDetails?orderID=@item.ID">Details</a></td>
+    </tr>
+}
+    </table>
+
+<a href="/Admin">Back</a>

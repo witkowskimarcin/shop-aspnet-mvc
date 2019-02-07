@@ -1,0 +1,43 @@
+﻿@*@model IEnumerable<sklep.Models.ProductModel>*@
+@using sklep.Models
+
+@{
+    ViewBag.Title = "Products";
+
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Miniaturka
+        </th>
+        <th>
+            Nazwa
+        </th>
+        <th>
+            Cena
+        </th>
+    </tr>
+    @if (ViewBag.exist = true)
+    {
+        List<ProductModel> model = ViewBag.productList;
+    foreach (ProductModel item in Model)
+    {
+        <tr>
+            <td>
+                <img src="data:image/gif;base64,@item.images.First().image" height="100" width="100" />
+            </td>
+            <td>
+                @*@Html.ActionLink(@item.Name, "Product", "ProductModel", new { prodId = item.ID })*@
+                <a href="/ProductModels/Product?prodID=@item.ID">@item.Name</a>
+            </td>
+            <td>
+                @item.Price zł
+            </td>
+        </tr>
+    }}
+        
+
+</table>
+
+

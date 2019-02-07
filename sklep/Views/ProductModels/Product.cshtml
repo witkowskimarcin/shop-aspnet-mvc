@@ -1,0 +1,83 @@
+﻿@model sklep.Models.ProductModel
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <!--- Image Slider -->
+            <div id="slides" class="carousel slide" data-ride="carousel">
+                <ul class="carousel-indicators">
+                    <li data-target="#slides" data-slide-to="0" class="active"></li>
+                    
+                        @for (var i = 1; i < ViewBag.numberOfImages; i++)
+                        {
+                            <li data-target="#slides" data-slide-to="@i">
+                            </li>
+                        }
+
+                </ul>
+
+
+                <div class="carousel-inner" height="250">
+
+                    <div class="carousel-item active">
+                            <img src="data:image/jpeg;base64,@Model.images.First().image"
+                                 class="img-circle mx-auto d-block"
+                                 height="250" alt="obrazek"/>
+                    </div>
+@for (var i = 1; i < ViewBag.numberOfImages; i++)
+{
+                    <div class="carousel-item">
+                        <img src="data:image/jpeg;base64,@Model.images.ElementAt(i).image"
+                             class="img-circle mx-auto d-block"
+                             height="250" alt="obrazek" />
+                        
+                    </div>
+}
+
+                </div>
+                
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <h3>@ViewBag.product.Name</h3>
+            <h4>@ViewBag.product.Description</h4>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="card" style="max-width: 22rem; height: 24rem;">
+                <div class="card-body">
+                    <h3 class="card-title text-center">
+                        @ViewBag.product.Price zł
+                    </h3>
+                    <h5 class="card-text">
+                        Liczba sztuk: @ViewBag.product.Quantity
+                    </h5>
+                    <h5 class="card-text">
+                        Odbiór osobisty: GRATIS
+                    </h5>
+                    <h5 class="card-text">
+                        <a href="#">Koszty dostawy</a>
+                    </h5>
+                    <h6 class="card-text">
+                        <a href="#">Sprawdź dostępność w salonach</a>
+                    </h6>
+                    <form action="/ProductModels/AddToCart?prodID=@ViewBag.product.ID" method="post">
+                        @{ 
+                            if (ViewBag.product.Quantity > 0)
+                            {
+                        <button type="submit" class="btn btn-lg btn-success btn-block" style="color:#ffffff;">Do koszyka</button>
+                            }
+                            else
+                            {
+                                <h3>Brak produktu</h3>
+                            }
+                            }
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+

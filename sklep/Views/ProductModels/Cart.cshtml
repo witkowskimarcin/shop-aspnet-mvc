@@ -1,0 +1,64 @@
+﻿@using sklep.Models
+@{
+    ViewBag.Title = "Cart";
+}
+
+<h1>Koszyk</h1>
+<br>
+@{
+    if (Session["cart"] != null)
+    {
+
+        CartModel cart = (CartModel)Session["cart"];
+        if (cart.getQuantity() > 0)
+        {
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nazwa produktu</th>
+            <th>Ilość</th>
+            <th>Cena za sztuke</th>
+            <th>Suma</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in cart.products)
+        {
+        <tr>
+            <td><a href="/ProductModels/Product?prodID=@item.Key.ID">@item.Key.Name</a></td>
+            <td>
+                            <form action="/ProductModels/CartMinus?prodID=@item.Key.ID" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-danger" style="color:#ffffff;">-</button>
+                            </form>
+                            <span> @item.Value </span>
+                            <form action="/ProductModels/CartPlus?prodID=@item.Key.ID" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-success" style="color:#ffffff;">+</button>
+                            </form>
+            </td>
+            <td>@item.Key.Price zł</td>
+
+            @{var sum = item.Key.Price * item.Value;}
+            
+            <td>@sum zł</td>
+ 
+         </tr>
+                }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>Razem: @cart.getSum() zł</td>
+        </tr>
+    </tfoot>
+</table>
+<form method="post" action="/ProductModels/CleanCart">
+    <button class="btn btn-danger">Opróżnij koszyk</button>
+    <a class="btn btn-primary" href="/ProductModels/Order">Złóż zamówienie</a>
+
+</form>
+                        }
+                    } 
+
+                else
+                { <h3>Koszyk jest pusty</h3> }
+                }
+

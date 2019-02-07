@@ -1,0 +1,154 @@
+﻿@using sklep.Models
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<!-- Jumbotron -->
+<div class="jumbotron">
+        <h1 class="display-4">Sklep Komputerowy</h1>
+        <p class="lead">Witaj w sklepie :)</p>
+    
+</div>
+@{
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            @foreach (var item in ViewBag.categories)
+            {
+                <div class="list-group dropright">
+                    <button type="button"
+                            class="list-group-item btn btn-outline-primary dropdown-toggle"
+                            data-toggle="dropdown">
+                        @item.Name
+                    </button>
+
+                    <div class="dropdown-menu">
+
+                        @foreach (var subitem in item.subcategories)
+                        {
+
+
+
+                            <a class="dropdown-item" href="/ProductModels/Products?subCatID=@subitem.ID">@subitem.Name</a>
+
+
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+       
+
+                <div class="col-8">
+            <div class="card">
+                <div class="card-body">
+
+                    <!--- Image Slider -->
+
+                    <div id="slides" class="carousel slide" data-ride="carousel">
+                        <ul class="carousel-indicators">
+                            <li data-target="#slides" data-slide-to="0" class="active"></li>
+                            <li data-target="#slides" data-slide-to="1"></li>
+                            <li data-target="#slides" data-slide-to="2"></li>
+                        </ul>
+                        <div class="carousel-inner" height="250">
+                            <div class="carousel-item active">
+                                <img src="~/Content/img/1.jpg"
+                                     class="img-circle mx-auto d-block"
+                                     height="250" alt="tlo">
+                                <div class="carousel-caption">
+                                    <h1 class="display-2">Polecamy</h1>
+                                    <a class="btn btn-primary btn-lg">Sprawdź</a>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="~/Content/img/2.jpg" class="img-circle mx-auto d-block"
+                                     height="250" alt="tapeta2">
+                                <div class="carousel-caption">
+                                    <h1 class="display-2">Polecamy</h1>
+                                    <a class="btn btn-primary btn-lg">Sprawdź</a>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="~/Content/img/3.jpg" class="img-circle mx-auto d-block"
+                                     height="250" alt="tapeta3">
+                                <div class="carousel-caption">
+                                    <h1 class="display-2">Polecamy</h1>
+                                    <a class="btn btn-primary btn-lg">Sprawdź</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <br/>
+    <div class="row">
+
+        <div class="col-sm-8">
+            @if (ViewBag.promotedProductsFlag == true)
+            {
+
+            <div class="row">
+                @foreach (PromotedProducts item in ViewBag.promotedProducts)
+                {
+                    if (item.product.Quantity > 0)
+                    {
+                <div class="col-sm-4">
+                    <div class="card text-center" style="max-width: 22rem; height: 24rem;">
+                        <img class="card-img-top" src="data:image/jpeg;base64,@item.product.images.First().image" alt="Obrazek" style="max-height: 180px; width: auto;">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.product.Name</h5>
+                            <p class="card-text">@item.product.Price zł</p>
+
+                            <a class="btn btn-primary" href="/ProductModels/Product?prodID=@item.product.ID">Zobacz</a>
+                        </div>
+                    </div>
+                </div>
+                    }
+                }
+
+            </div>
+            }
+
+        </div>
+
+        @if (ViewBag.mainPromotionFlag == true)
+        {
+            MainPromotion mp = (MainPromotion)ViewBag.mainPromotion;
+            if (mp.product.Quantity > 0)
+            {
+            <div class="col-sm-4">
+                <div class="card" style="max-width: 22rem; height: 49.5rem;">
+                    
+                    <img class="card-img-top" src="data:image/jpeg;base64,@mp.product.images.First().image"
+                         style="max-width: 12rem;" alt="obrazek" />
+                    <h3 class="text-center"> Złoty strzał</h3>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">@mp.product.Name</h5>
+                        <p class="card-text">@mp.product.Description</p>
+                        @*<p class="card-text">Rodzaj myszy: Optyczna</p>
+                        <p class="card-text">Typ klawiatury: Klasyczna</p>
+                        <p class="card-text">Idealny zestaw dla graczy</p>*@
+                        <p class="card-text">@mp.product.Price zł</p>
+                        <h5>Użyj kodu: @mp.Code</h5>
+                        <h6>Zostało: @mp.Left</h6>
+                        <div class="progress">
+                            @{ int x = (int)((double)((mp.Left * 100) / mp.Quantity));}
+                            <div class="progress-bar" role="progressbar" style="width: @x%" aria-valuenow="@mp.Left" aria-valuemin="0" aria-valuemax="@mp.Quantity"></div>
+                        </div>
+                        <br>
+                        <a type="submit" class="btn btn-primary" href="/ProductModels/Product?prodID=@mp.product.ID">Do koszyka</a>
+                    </div>
+                </div>
+            </div>
+                                    }
+                                }
+</div>
+            
+        </div>
+    }
+        <hr class="light row text-center">

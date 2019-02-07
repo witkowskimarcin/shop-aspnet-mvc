@@ -1,0 +1,80 @@
+﻿@using sklep.Models
+@{
+    ViewBag.Title = "Order";
+}
+
+
+@if (ViewBag.flag==true)
+{
+    CartModel cart = (CartModel)Session["cart"];
+    UserDetails ud = (UserDetails)ViewBag.userDetails;
+
+<h2>Składanie zamówienia</h2>
+<h4>Przesyłka</h4>
+<form action="/ProductModels/Order" method="post">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="Shipment">Wybierz rodzaj przesyłki</label>
+        </div>
+        <select class="custom-select" name="Shipment" required>
+            <optgroup label="Płatność z góry">
+                <option value="1">Przesyłka kurierska - 20 zł</option>
+                <option value="2">Paczkomaty Inpost - 10 zł</option>
+                <option value="3">List polecony piorytetowy - 10 zł</option>
+            </optgroup>
+            <optgroup label="Płatność przy odbiorze">
+                <option value="4">Przesyłka kurierska pobraniowa - 20 zł</option>
+                <option value="5">Paczka pocztowa pobraniowa piorytetowa - 15 zł</option>
+            </optgroup>
+        </select>
+    </div>
+    <h4>Dane do wysyłki</h4>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" id="basic-addon3">Imię</label>
+        </div>
+        <input id="Firstname" name="Firstname" class="form-control" value="@ud.Firstname" required autofocus>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" id="basic-addon3">Nazwisko</label>
+        </div>
+        <input id="Lastname" name="Lastname" class="form-control" value="@ud.Lastname" required autofocus>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" id="basic-addon3">Miejscowość</label>
+        </div>
+        <input id="Locality" name="Locality" class="form-control" value="@ud.Locality" required autofocus>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" id="basic-addon3">Ulica i numer domu/mieszkania</label>
+        </div>
+        <input id="street" name="Street" class="form-control" value="@ud.Street" required autofocus>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" id="basic-addon3">Kod pocztowy</label>
+        </div>
+        <input id="Zipcode" name="Zipcode" class="form-control" value="@ud.Zipcode" required autofocus>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" id="basic-addon3">Numer telefonu</label>
+        </div>
+        <input id="Phone" name="Phone" class="form-control" value="@ud.Phone" required autofocus>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" id="basic-addon3">Uwagi do zamówienia</label>
+        </div>
+        <input id="Description" name="Description" class="form-control">
+    </div>
+    <label><input type="checkbox" id="Remember" name="Remember" value="true" checked> Zapamiętaj dane dla następnych zamówień</label>
+
+    <p> Razem do zapłaty: @cart.getSum() zł</p>
+    <button type="submit" class="btn btn-lg btn-primary btn-block">Przejdź do podsumowania</button>
+</form>
+}
+

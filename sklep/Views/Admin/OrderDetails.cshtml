@@ -1,0 +1,75 @@
+﻿@using sklep.Models
+@{
+    ViewBag.Title = "OrderDetails";
+    OrderModel item = (OrderModel)ViewBag.order;
+}
+
+<h2>OrderDetails</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>Date</th>
+
+        <th>
+            UserID
+        </th>
+        <th>
+            Firstname
+        </th>
+        <th>
+            Lastname
+        </th>
+        <th>Locality</th>
+        <th>Street</th>
+        <th>Zipcode</th>
+        <th>Phone</th>
+        <th>Shipment</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>
+            @item.ID
+        </td>
+        <td>@item.Date</td>
+
+        <td>
+            @item.UserID
+        </td>
+        <td>
+            @item.Firstname
+        </td>
+        <td>
+            @item.Lastname
+        </td>
+        <td>@item.Locality</td>
+        <td>@item.Street</td>
+        <td>@item.Zipcode</td>
+        <td>@item.Phone</td>
+        <td>@item.Shipment</td>
+        <td>@item.Description</td>
+    </tr>
+</table>
+<table class="table">
+    <tr><th>Products</th></tr>
+    <tr>
+        <th>Product ID</th>
+        <th>Product Name</th>
+        <th>Product Price</th>
+        <th>Quantity</th>
+    </tr>
+        @foreach (OrderDetailModel od in @item.orderDetails)
+        {
+            <tr>
+                <td>@od.product.ID</td>
+                <td>@od.product.Name</td>
+                <td>@od.product.Price zł</td>
+                <td>@od.Quantity</td>
+            </tr>
+        }
+</table>
+
+<a href="/Admin/Orders">Back</a>
+

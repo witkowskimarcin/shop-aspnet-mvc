@@ -1,0 +1,75 @@
+﻿@using sklep.Models.Forms
+@{
+    ViewBag.Title = "OrderSum";
+}
+
+<h2>Posumowanie zamówienia</h2>
+@{ 
+                if (Session["order"] != null)
+                {
+                    OrderForm order = (OrderForm) Session["order"];
+            <div>
+
+
+                <br/><br/>
+
+
+                <h4>Dane zamówienia</h4>
+
+
+                <table class="table table-striped">
+        <tr>
+            <th>Imię</th>
+            <th>@order.Firstname</th>
+        </tr>
+        <tr>
+            <th>Nazwisko</th>
+            <th>@order.Lastname</th>
+        </tr>
+        <tr>
+            <th>Miejscowość</th>
+            <th>@order.Locality</th>
+        </tr>
+        <tr>
+            <th>Ulica i numer ulicy</th>
+            <th>@order.Street</th>
+        </tr>
+        <tr>
+            <th>Telefon</th>
+            <th>@order.Phone</th>
+        </tr>
+        <tr>
+            <th>Kod pocztowy</th>
+            <th>@order.Zipcode</th>
+        </tr>
+        <tr>
+            <th>Przesyłka</th>
+            <th>@order.Shipment</th>
+        </tr>
+        <tr>
+            <th>Uwagi do zamówienia</th>
+            <th>@order.Description</th>
+        </tr>
+        <tr>
+            <th>Zapamiętać dane wysyłki dla przyszłych zamówień</th>
+            @if (order.Remember)
+            {
+            <th>Tak</th>
+            }
+            else
+            {
+                <th>Nie</th>
+            }
+        </tr>
+    </table>
+    <form method="post" action="/ProductModels/OrderSumPost/">
+        <button typ="submit" class="btn btn-lg btn-primary btn-block">Złóż zamówienie</button>
+    </form>
+</div>
+    }
+    else
+    {
+        <br /><h4>Błąd</h4>
+    }
+    }
+
